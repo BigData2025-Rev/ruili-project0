@@ -1,9 +1,8 @@
-import numpy as np
-
 class Snake:
     def __init__(self):
         self.position = []
         self.hitMyself = False
+        self.pervDirection = ""
     
     def initPosition(self, gameMap):
         initX = len(gameMap) // 2
@@ -17,6 +16,17 @@ class Snake:
     
     def move(self, direction, fruitPosition):
         direction = direction.upper()
+
+        # if snake try to move to oppsite direction, do not move
+        if (direction == "W" and self.pervDirection == "S") or \
+            (direction == "S" and self.pervDirection == "W") or \
+            (direction == "A" and self.pervDirection == "D") or \
+            (direction == "D" and self.pervDirection == "A"):
+                return
+        # if user input illegal, just move as pervious direction
+        if len(direction) == 0 or not direction in "WASD":
+            direction = self.pervDirection
+
         if direction == "W":
             newPosition = [self.position[-1][0]-1, self.position[-1][1]]
         elif direction == "A":
@@ -28,6 +38,8 @@ class Snake:
         else:
             return
         
+        self.pervDirection = direction
+
         # check if snake eat itself
         if newPosition in self.position:
             self.hitMyself = True

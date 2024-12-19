@@ -16,38 +16,36 @@ class GamePad:
             lines = content.split("\n")
             self.mapHeight = len(lines)
             self.mapWidth = len(lines[0])
-            
-            # 将地图存储为嵌套列表
+            # Store the mao in a 2d array
             self.map = [list(line) for line in lines]
 
-    # 渲染地图，包括地图、蛇和水果
+    # render the map, including the snake and the fruit
     def paint(self):
         for row in self.map:
-            print("".join(row))  # 将列表中的字符拼接成字符串打印
+            print("".join(row)
 
-    # 更新蛇的位置
+    # update the position of the snake
     def updateSnake(self, snakePosition):
-        # 清除地图中的旧蛇位置
+        # clear the old snake and the fruit first
         for row in range(self.mapHeight):
             for col in range(self.mapWidth):
-                if self.map[row][col] == "s" or self.map[row][col] == "F":
+                if self.map[row][col] in "sHF":
                     self.map[row][col] = " "
 
-        # 更新蛇的新位置
+        # add the new position of the snake
         for position in snakePosition:
             if self.map[position[0]][position[1]] == "*":
                 self.wallHit = True
             self.map[position[0]][position[1]] = "s"
-    
-    # 更新水果的位置
+        # The head should be "H"
+        self.map[snakePosition[-1][0]][snakePosition[-1][1]] = "H"
+    # add the position of the fruit
     def updateFruit(self, fruitPosition):
         self.map[fruitPosition[0]][fruitPosition[1]] = "F"
 
-    # 获取地图
     def getGameMap(self):
         return self.map
 
-    # 检查蛇是否撞墙
     def isSnakeHitWall(self):
         return self.wallHit
     

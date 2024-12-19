@@ -12,6 +12,8 @@ def gameStart():
         elif userInput == '2':
             game = Game()
             game.run()
+        elif userInput == '3':
+            break
         else:
             print("Oops, something wrong here, I accepted an wrong input.")
     
@@ -20,10 +22,11 @@ def gameStart():
 def showInstruction():
     print("""Instruction:
         [1] Check the historical score rank
-        [2] Start a new round""")
-    userInput = input("Please enter 1 or 2: ")
-    while(not userInput in "12"):
-        userInput = input("Please enter 1 or 2: ")
+        [2] Start a new round
+        [3] End game""")
+    userInput = input("Please enter 1 ~ 3: ")
+    while(not userInput in "123"):
+        userInput = input("Please enter 1 ~ 3: ")
     return userInput
 
 gameStart()

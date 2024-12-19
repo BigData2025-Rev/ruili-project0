@@ -11,7 +11,7 @@ class ScoreRank():
     def readScoreRank(cls):
         with open(cls.scoreRankPath) as scoreRankFile:
             lines = scoreRankFile.read().split("\n")
-            scores = [line for line in lines]
+            scores = [line.strip() for line in lines if line.strip().isdigit()]
             return scores
     
     @classmethod
@@ -37,6 +37,7 @@ class ScoreRank():
             rank += 1
         print("<------------------------->\n")
 
-    # @classmethod
-    # def addScore(cls):
-    #     with open(cls.scoreRankPath, 'w') as scoreRankFile:
+    @classmethod
+    def addScore(cls, score):
+        with open(cls.scoreRankPath, 'a') as scoreRankFile:
+            scoreRankFile.write(f"{score}\n")
