@@ -2,7 +2,9 @@ from .Snake import Snake
 from .GamePad import GamePad
 from .Fruit import Fruit
 from .ScoreRank import ScoreRank
-import numpy as np
+import keyboard
+import time
+import msvcrt
 
 class Game:
     def __init__(self):
@@ -27,9 +29,7 @@ class Game:
         while not self.gameEnd:
             
             self.gamePad.paint()
-
             self.setUserInput()
-            
             self.snake.move(self.userInput, self.fruit.getPosition())
             self.score += self.fruit.update(self.gamePad.getGameMap(), self.snake.getPosition())
             self.gamePad.updateSnake(self.snake.getPosition())
@@ -46,5 +46,12 @@ class Game:
         print("Your final score is " + str(self.score))
         print("Round End!\n")
 
+        self.clear_input_buffer()
+
     def setUserInput(self):
-        self.userInput = input()
+        self.userInput = keyboard.read_event().name
+        time.sleep(0.1)
+
+    def clear_input_buffer(self):
+        while msvcrt.kbhit():
+            msvcrt.getch()

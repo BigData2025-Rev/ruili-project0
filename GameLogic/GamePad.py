@@ -21,8 +21,9 @@ class GamePad:
 
     # render the map, including the snake and the fruit
     def paint(self):
+        os.system('cls' if os.name == 'nt' else 'clear')
         for row in self.map:
-            print("".join(row)
+            print("".join(row))
 
     # update the position of the snake
     def updateSnake(self, snakePosition):
