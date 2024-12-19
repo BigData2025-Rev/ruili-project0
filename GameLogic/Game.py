@@ -23,11 +23,11 @@ class Game:
             if self.userInput == "end":
                 self.gameEnd = True
             
-            # self.snake.move(self.userInput)
-            # self.score += self.fruit.update(self.snake)
-            # self.gamePad.update(self.snake, self.fruit)
+            self.snake.move(self.userInput)
+            self.score += self.fruit.update(self.snake)
+            self.gamePad.update(self.snake.getPosition(), self.fruit.getPosition())
 
-            # self.gameEnd = self.gamePad.isGameEnd()
+            self.gameEnd = self.gamePad.isSnakeHitWall() and self.snake.isSnakeHitItself()
 
     def setUserInput(self):
         self.userInput = input()
