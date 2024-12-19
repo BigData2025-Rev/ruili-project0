@@ -6,8 +6,8 @@ class Snake:
         self.hitMyself = False
     
     def initPosition(self, gameMap):
-        initX = gameMap.shape[1]//2
-        initY = gameMap.shape[0]//2
+        initX = len(gameMap) // 2
+        initY = len(gameMap[0]) // 2
         if gameMap[initX][initY] != " ":
             initX -= 1
         self.position.append([initX, initY])
@@ -18,13 +18,13 @@ class Snake:
     def move(self, direction, fruitPosition):
         direction = direction.upper()
         if direction == "W":
-            newPosition = [self.position[-1][0], self.position[-1][1]+1]
-        elif direction == "A":
             newPosition = [self.position[-1][0]-1, self.position[-1][1]]
-        elif direction == "S":
+        elif direction == "A":
             newPosition = [self.position[-1][0], self.position[-1][1]-1]
-        elif direction == "D":
+        elif direction == "S":
             newPosition = [self.position[-1][0]+1, self.position[-1][1]]
+        elif direction == "D":
+            newPosition = [self.position[-1][0], self.position[-1][1]+1]
         else:
             return
         
