@@ -18,7 +18,7 @@ class Game:
         # init the gameMap, snake position and generate a fruit
         self.gamePad.initGameMap()
         self.snake.initPosition(self.gamePad.getGameMap())
-        self.fruit.update(self.gamePad.getGameMap())
+        self.fruit.update(self.gamePad.getGameMap(), self.snake.getPosition())
         self.gamePad.updateSnake(self.snake.getPosition())
         self.gamePad.updateFruit(self.fruit.getPosition())
 
@@ -29,7 +29,7 @@ class Game:
             self.setUserInput()
             
             self.snake.move(self.userInput, self.fruit.getPosition())
-            self.score += self.fruit.update(self.gamePad.getGameMap())
+            self.score += self.fruit.update(self.gamePad.getGameMap(), self.snake.getPosition())
             self.gamePad.updateSnake(self.snake.getPosition())
             self.gamePad.updateFruit(self.fruit.getPosition())
 

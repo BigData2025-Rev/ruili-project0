@@ -29,7 +29,7 @@ class GamePad:
         # 清除地图中的旧蛇位置
         for row in range(self.mapHeight):
             for col in range(self.mapWidth):
-                if self.map[row][col] == "s":
+                if self.map[row][col] == "s" or self.map[row][col] == "F":
                     self.map[row][col] = " "
 
         # 更新蛇的新位置
