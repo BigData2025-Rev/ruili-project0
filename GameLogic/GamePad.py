@@ -5,11 +5,12 @@ class GamePad:
         self.wallHit = False
         self.mapHeight = 0
         self.mapWidth = 0
-        self.map = []  # 使用普通嵌套列表
+        self.map = []
 
     def initGameMap(self):
-        # 从文件中加载地图并存储为嵌套列表
-        mapFilePath = os.path.join(os.path.dirname(__file__), '../Resources/GameMap2.txt')
+        # ask user for game map chose
+        userInput = self.askUserMapChoice()
+        mapFilePath = os.path.join(os.path.dirname(__file__), '../Resources/GameMap' + userInput + '.txt')
         with open(mapFilePath, "r", encoding="utf-8") as mapFile:
             content = mapFile.read()
             lines = content.split("\n")
@@ -49,3 +50,11 @@ class GamePad:
     # 检查蛇是否撞墙
     def isSnakeHitWall(self):
         return self.wallHit
+    
+    def askUserMapChoice(self):
+        askInstruction = """Please pick which map you want to play:\n[1] Easy\n[2] Medium\n[3] Hard\nEnter 1 or 2 or 3: """
+        userMapChoice = input(askInstruction)
+        while not userMapChoice in "123":
+            print("Your input must be 1 or 2 or 3")
+            userMapChoice = input(askInstruction)
+        return userMapChoice

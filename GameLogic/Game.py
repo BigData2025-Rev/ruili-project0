@@ -14,7 +14,8 @@ class Game:
         self.gameEnd = False
     
     def run(self):
-        
+        print("\nRound Start!")
+        print("Press W-A-S-D to move the snake and eat the fruit!")
         # init the gameMap, snake position and generate a fruit
         self.gamePad.initGameMap()
         self.snake.initPosition(self.gamePad.getGameMap())
@@ -41,6 +42,7 @@ class Game:
         else:
             print("You ate yourself!")
         print("Your final score is " + str(self.score))
+        print("Round End!\n")
 
     def setUserInput(self):
         self.userInput = input()
