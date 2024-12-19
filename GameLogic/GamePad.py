@@ -5,7 +5,12 @@ class GamePad:
     def __init__(self):
         
         self.wallHit = False
+        self.mapHeight = 0
+        self.mapWidth = 0
+        self.map = np.empty((0, 0), dtype=str)
 
+
+    def initGameMap(self):
         # Get game map from file
         # store map in an np array
         mapFilePath = os.path.join(os.path.dirname(__file__), '../Resources/GameMap2.txt')
