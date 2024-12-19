@@ -33,13 +33,14 @@ class GamePad:
             print()
 
     # update the game map, include the snake and fruit
-    def update(self, snakePosition, fruitPosition):
+    def updateSnake(self, snakePosition):
         for position in snakePosition:
             if(self.map[position[0]][position[1]] == "*"):
                 self.wallHit = True
             self.map[position[0]][position[1]] = "s"
-        
-        self.map[fruitPosition[0]][fruitPosition[1]] = "x"
+    
+    def updateFruit(self, fruitPosition):
+        self.map[fruitPosition[0]][fruitPosition[1]] = "F"
 
     def getGameMap(self):
         return self.map

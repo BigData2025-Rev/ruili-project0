@@ -1,3 +1,5 @@
+import numpy as np
+
 class Snake:
     def __init__(self):
         self.position = []
@@ -13,7 +15,7 @@ class Snake:
     def getPosition(self):
         return self.position
     
-    def move(self, direction):
+    def move(self, direction, fruitPosition):
         direction = direction.upper()
         if direction == "W":
             newPosition = [self.position[-1][0], self.position[-1][1]+1]
@@ -31,8 +33,10 @@ class Snake:
             self.hitMyself = True
         
         # add the new head to the position and remove the tail
+        # pop the tail if we didn't eat the fruit
         self.position.append(newPosition)
-        self.position.pop(0)
+        if(fruitPosition not in self.position):
+            self.position.pop(0)
     
     def isSnakeHitItself(self):
         return self.hitMyself

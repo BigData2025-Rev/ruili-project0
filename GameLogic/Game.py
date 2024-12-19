@@ -1,6 +1,7 @@
 from .Snake import Snake
 from .GamePad import GamePad
 from .Fruit import Fruit
+import numpy as np
 
 class Game:
     def __init__(self):
@@ -18,7 +19,8 @@ class Game:
         self.gamePad.initGameMap()
         self.snake.initPosition(self.gamePad.getGameMap())
         self.fruit.update(self.gamePad.getGameMap(), self.snake.getPosition())
-        self.gamePad.update(self.snake.getPosition(), self.fruit.getPosition())
+        self.gamePad.updateSnake(self.snake.getPosition())
+        self.gamePad.updateFruit(self.fruit.getPosition())
 
         while not self.gameEnd:
             
@@ -29,9 +31,10 @@ class Game:
             if self.userInput == "end":
                 self.gameEnd = True
             
-            self.snake.move(self.userInput)
-            self.score += self.fruit.update(self.snake)
-            self.gamePad.update(self.snake.getPosition(), self.fruit.getPosition())
+            self.snake.move(self.userInput, self.fruit.getPosition())
+            self.score += self.fruit.update(self.gamePad.getGameMap(), self.snake.getPosition())
+            self.gamePad.updateSnake(self.snake.getPosition())
+            self.gamePad.updateFruit(self.fruit.getPosition())
 
             self.gameEnd = self.gamePad.isSnakeHitWall() and self.snake.isSnakeHitItself()
 
