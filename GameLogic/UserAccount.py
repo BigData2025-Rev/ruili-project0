@@ -88,8 +88,7 @@ class UserAccount():
             json.dump(accountList, userAccountFile, indent=4, ensure_ascii=False)
 
         print(f"{ANSI.BOLD}{ANSI.GREEN}Registration successful!{ANSI.RESET}")
-
-
+    
     @classmethod
     def logout(cls):
         pass

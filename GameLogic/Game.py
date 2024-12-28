@@ -2,6 +2,7 @@ from .Snake import Snake
 from .GamePad import GamePad
 from .Fruit import Fruit
 from .UserAccount import UserAccount
+from .ANSI import ANSI
 import keyboard
 import time
 import msvcrt
@@ -17,15 +18,16 @@ class Game:
         self.gameEnd = False
     
     def run(self):
-        print("\nRound Start!")
-        print("Press W-A-S-D to move the snake and eat the fruit!")
         # init the gameMap, snake position and generate a fruit
         self.gamePad.initGameMap()
         self.snake.initPosition(self.gamePad.getGameMap())
         self.fruit.update(self.gamePad.getGameMap(), self.snake.getPosition())
         self.gamePad.updateSnake(self.snake.getPosition())
         self.gamePad.updateFruit(self.fruit.getPosition())
-
+        print(f"\n{ANSI.RED}{ANSI.BOLD}New Round Start In 3 Seconds!{ANSI.RESET}")
+        print(f"{ANSI.ITALIC}{ANSI.BOLD}Press W-A-S-D to move the snake and eat the fruit!{ANSI.RESET}")
+        time.sleep(3)
+        
         while not self.gameEnd:
             
             self.gamePad.paint()
@@ -39,12 +41,12 @@ class Game:
 
         self.gamePad.paint()
         if(self.gamePad.isSnakeHitWall()):
-            print("You hit the wall!")
+            print(f"{ANSI.BOLD}{ANSI.ITALIC}You hit the wall!{ANSI.RESET}")
         else:
-            print("You ate yourself!")
+            print(f"{ANSI.BOLD}{ANSI.ITALIC}You ate yourself!{ANSI.RESET}")
         UserAccount.addScore(self.score)
-        print("Your final score is " + str(self.score))
-        print("Round End!\n")
+        print(f"{ANSI.BOLD}{ANSI.ITALIC}Your final score is {ANSI.RED}{self.score}{ANSI.RESET}")
+        print(f"{ANSI.RED}{ANSI.BOLD}Round End!{ANSI.RESET}\n")
 
         self.clear_input_buffer()
 

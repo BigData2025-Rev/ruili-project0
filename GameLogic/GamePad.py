@@ -1,4 +1,5 @@
 import os
+from .ANSI import ANSI
 
 class GamePad:
     def __init__(self):
@@ -21,9 +22,20 @@ class GamePad:
 
     # render the map, including the snake and the fruit
     def paint(self):
-        os.system('cls' if os.name == 'nt' else 'clear')
+        os.system('cls' if os.name == 'nt' else 'clear')  # 清屏
+
         for row in self.map:
-            print("".join(row))
+            styled_row = []
+            for char in row:
+                if char == "*":  # wall, bold red
+                    styled_row.append(f"{ANSI.BOLD}{ANSI.RED}{char}{ANSI.RESET}")
+                elif char == "F":  # fruit, yellow
+                    styled_row.append(f"{ANSI.BOLD}{ANSI.YELLOW}{char}{ANSI.RESET}")
+                elif char in "sH":  # snake, blue
+                    styled_row.append(f"{ANSI.BOLD}{ANSI.CYAN}{char}{ANSI.RESET}")
+                else: 
+                    styled_row.append(char)
+            print(" ".join(styled_row))
 
     # update the position of the snake
     def updateSnake(self, snakePosition):
@@ -51,9 +63,14 @@ class GamePad:
         return self.wallHit
     
     def askUserMapChoice(self):
-        askInstruction = """Please pick which map you want to play:\n[1] Easy\n[2] Medium\n[3] Hard\nEnter 1 or 2 or 3: """
-        userMapChoice = input(askInstruction)
-        while not userMapChoice in "123":
+        
+        print(f"{ANSI.BOLD}\nPlease pick which map you want to play: {ANSI.RESET}")
+        print(f"{ANSI.BOLD}{ANSI.YELLOW}[1]{ANSI.RESET}I want to play EASY.{ANSI.RESET}")
+        print(f"{ANSI.BOLD}{ANSI.YELLOW}[2]{ANSI.RESET}I want to play MEDIUM.{ANSI.RESET}")
+        print(f"{ANSI.BOLD}{ANSI.YELLOW}[3]{ANSI.RESET}I want to play HARD.{ANSI.RESET}")
+        userInput = input(f"{ANSI.BOLD}{ANSI.YELLOW}Please enter 1 ~ 3: {ANSI.RESET}")
+        
+        while not userInput in "123":
             print("Your input must be 1 or 2 or 3")
-            userMapChoice = input(askInstruction)
-        return userMapChoice
+            userInput = input(f"{ANSI.BOLD}{ANSI.YELLOW}Please enter 1 ~ 3: {ANSI.RESET}")
+        return userInput
