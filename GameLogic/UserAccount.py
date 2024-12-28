@@ -57,7 +57,7 @@ class UserAccount():
             for account in accountList:
                 if account["username"] == username and account["password"] == password:
                     cls.currentAccount = username
-                    print(f"{ANSI.BOLD}You logged in as {username}{ANSI.RESET}")
+                    print(f"{ANSI.BOLD}{ANSI.GREEN}You logged in as {username}{ANSI.RESET}")
                     return
             print(f"{ANSI.BOLD}The account or password is wrong, please try again!\n{ANSI.RESET}")
             retry += 1
@@ -68,18 +68,43 @@ class UserAccount():
     @classmethod
     def register(cls):
         accountList = cls.readUserAccount()
+        print(f"{ANSI.BOLD}\nYou entered register process.{ANSI.RESET}")
+        print(f"{ANSI.BOLD}Please notice: {ANSI.RESET}")
+        print(f"{ANSI.ITALIC}Both username and password can only contain numbers and letters.{ANSI.RESET}")
+        print(f"{ANSI.ITALIC}Username cannot be empty, and length cannot exceed 7.{ANSI.RESET}")
+        print(f"{ANSI.ITALIC}Password cannot be empty, and length cannot exceed 10.\n{ANSI.RESET}")
         while True:
             username = input(f"{ANSI.BOLD}{ANSI.YELLOW}Please enter your username: {ANSI.RESET}")
+            errors = []
+            
+            if len(username) < 1:
+                errors.append(f"{ANSI.BOLD}{ANSI.RED}Username cannot be empty.{ANSI.RESET}")
+            if len(username) > 7:
+                errors.append(f"{ANSI.BOLD}{ANSI.RED}Username length cannot exceed 7 characters.{ANSI.RESET}")
+            if not username.isalnum():
+                errors.append(f"{ANSI.BOLD}{ANSI.RED}Username can only contain numbers and letters.{ANSI.RESET}")
             if any(account["username"] == username for account in accountList):
-                print(f"{ANSI.BOLD}{ANSI.RED}The username already exists: {username}{ANSI.RESET}")
+                errors.append(f"{ANSI.BOLD}{ANSI.RED}Username already exists: {username}{ANSI.RESET}")
+            if errors:
+                print("\n".join(errors))
             else:
                 break
 
         while True:
             password = input(f"{ANSI.BOLD}{ANSI.YELLOW}Please enter your password: {ANSI.RESET}")
-            if password.isalnum() and len(password) <= 10:
+            errors = []
+            
+            if len(password) < 1:
+                errors.append(f"{ANSI.BOLD}{ANSI.RED}Password cannot be empty.{ANSI.RESET}")
+            if len(password) > 10:
+                errors.append(f"{ANSI.BOLD}{ANSI.RED}Password length cannot exceed 10 characters.{ANSI.RESET}")
+            if not password.isalnum():
+                errors.append(f"{ANSI.BOLD}{ANSI.RED}Password can only contain numbers and letters.{ANSI.RESET}")
+            if errors:
+                print("\n".join(errors))
+            else:
                 break
-            print(f"{ANSI.BOLD}{ANSI.RED}Password must be alphanumeric and no more than 10 characters.{ANSI.RESET}")
+
 
         newAccount = {"username": username, "password": password}
         accountList.append(newAccount)
@@ -87,7 +112,7 @@ class UserAccount():
         with open(cls.userAccountPath, 'w', encoding='utf-8') as userAccountFile:
             json.dump(accountList, userAccountFile, indent=4, ensure_ascii=False)
 
-        print(f"{ANSI.BOLD}{ANSI.GREEN}Registration successful!{ANSI.RESET}")
+        print(f"{ANSI.BOLD}{ANSI.GREEN}Registration successful!\n{ANSI.RESET}")
     
     @classmethod
     def logout(cls):
