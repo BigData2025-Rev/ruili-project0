@@ -1,7 +1,7 @@
 from .Snake import Snake
 from .GamePad import GamePad
 from .Fruit import Fruit
-from .ScoreRank import ScoreRank
+from .UserAccount import UserAccount
 import keyboard
 import time
 import msvcrt
@@ -42,7 +42,7 @@ class Game:
             print("You hit the wall!")
         else:
             print("You ate yourself!")
-        ScoreRank.addScore(self.score)
+        UserAccount.addScore(self.score)
         print("Your final score is " + str(self.score))
         print("Round End!\n")
 
